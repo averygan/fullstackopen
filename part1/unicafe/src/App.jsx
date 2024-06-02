@@ -11,8 +11,12 @@ const Header = (prop) => {
 }
 
 const Display = ({text, stats}) => {
+  if (text != "positive")
+    return (
+      <div>{text} {stats}</div>
+    )
   return (
-    <div>{text} {stats}</div>
+    <div>{text} {stats} %</div>
   )
 }
 
@@ -32,6 +36,9 @@ const App = () => {
         <Display text="good" stats={good} />
         <Display text="neutral" stats={neutral} />
         <Display text="bad" stats={bad} />
+        <Display text="total" stats={good + bad + neutral} />
+        <Display text="average" stats={(good + bad + neutral) / 3} />
+        <Display text="positive" stats={good / (good + bad + neutral) * 100} />
     </div>
   )
 }
