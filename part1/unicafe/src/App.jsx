@@ -11,18 +11,32 @@ const Header = (prop) => {
 }
 
 const Statisticline = ({text, value}) => {
-  if (text != "positive")
+  if (text != "positive" && text != "average")
     return (
-      <div>{text} {value}</div>
+      <>
+        <td>{text}</td> 
+        <td>{value}</td>
+      </>
+    )
+  if (text == "average")
+    return (
+      <>
+        <td>{text}</td> 
+        <td>{value.toFixed(2)}</td>
+      </>
     )
   return (
-    <div>{text} {value} %</div>
+    <>
+      <td>{text}</td> 
+      <td>{value.toFixed(2)} %</td>
+    </>
   )
 }
 
 const Statistics = ({good, neutral, bad}) => {
   const total = good + neutral + bad;
-  const average = total / 3;
+  const totalScore = (good * 1) + (bad * -1);
+  const average = totalScore / total;
   const percentage = (good / total) * 100;
 
   if (total === 0) {
@@ -30,14 +44,14 @@ const Statistics = ({good, neutral, bad}) => {
   }
 
   return (
-    <div>
-      <Statisticline text="good" value={good} />
-      <Statisticline text="neutral" value={neutral} />
-      <Statisticline text="bad" value={bad} />
-      <Statisticline text="total" value={total} />
-      <Statisticline text="average" value={average} />
-      <Statisticline text="positive" value={percentage} />
-    </div>
+    <table>
+      <tr><Statisticline text="good" value={good} /></tr>
+      <tr><Statisticline text="neutral" value={neutral} /></tr>
+      <tr><Statisticline text="bad" value={bad} /></tr>
+      <tr><Statisticline text="total" value={total} /></tr>
+      <tr><Statisticline text="average" value={average} /></tr>
+      <tr><Statisticline text="positive" value={percentage} /></tr>
+    </table>
   )
 }
 
