@@ -45,12 +45,14 @@ const Statistics = ({good, neutral, bad}) => {
 
   return (
     <table>
-      <tr><Statisticline text="good" value={good} /></tr>
-      <tr><Statisticline text="neutral" value={neutral} /></tr>
-      <tr><Statisticline text="bad" value={bad} /></tr>
-      <tr><Statisticline text="total" value={total} /></tr>
-      <tr><Statisticline text="average" value={average} /></tr>
-      <tr><Statisticline text="positive" value={percentage} /></tr>
+      <tbody>
+        <tr><Statisticline text="good" value={good} /></tr>
+        <tr><Statisticline text="neutral" value={neutral} /></tr>
+        <tr><Statisticline text="bad" value={bad} /></tr>
+        <tr><Statisticline text="total" value={total} /></tr>
+        <tr><Statisticline text="average" value={average} /></tr>
+        <tr><Statisticline text="positive" value={percentage} /></tr>
+      </tbody>
     </table>
   )
 }
