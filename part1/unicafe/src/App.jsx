@@ -10,13 +10,34 @@ const Header = (prop) => {
   )
 }
 
-const Display = ({text, stats}) => {
+const Statisticline = ({text, value}) => {
   if (text != "positive")
     return (
-      <div>{text} {stats}</div>
+      <div>{text} {value}</div>
     )
   return (
-    <div>{text} {stats} %</div>
+    <div>{text} {value} %</div>
+  )
+}
+
+const Statistics = ({good, neutral, bad}) => {
+  const total = good + neutral + bad;
+  const average = total / 3;
+  const percentage = (good / total) * 100;
+
+  if (total === 0) {
+    return <div>No feedback given</div>;
+  }
+
+  return (
+    <div>
+      <Statisticline text="good" value={good} />
+      <Statisticline text="neutral" value={neutral} />
+      <Statisticline text="bad" value={bad} />
+      <Statisticline text="total" value={total} />
+      <Statisticline text="average" value={average} />
+      <Statisticline text="positive" value={percentage} />
+    </div>
   )
 }
 
@@ -33,12 +54,7 @@ const App = () => {
         <Button handleClick={() => setNeutral(neutral + 1)} text="neutral" />
         <Button handleClick={() => setBad(bad + 1)} text="bad" />
       <Header text="Statistics" />
-        <Display text="good" stats={good} />
-        <Display text="neutral" stats={neutral} />
-        <Display text="bad" stats={bad} />
-        <Display text="total" stats={good + bad + neutral} />
-        <Display text="average" stats={(good + bad + neutral) / 3} />
-        <Display text="positive" stats={good / (good + bad + neutral) * 100} />
+        <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   )
 }
