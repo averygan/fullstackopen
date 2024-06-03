@@ -17,9 +17,28 @@ const updatePoints = (points, selected, setPoints) => {
   setPoints(prevPoints => {
     const copy = [...prevPoints]
     copy[selected] += 1
-    console.log(copy)
+    const maxIndex = points.indexOf(Math.max(...points))
     return copy
   })
+}
+
+const Header = ({text}) => <h1>{text}</h1>
+
+const DisplayVotes = ({votes}) => {
+  return (
+    <div>
+      has {votes} votes
+    </div>
+  )
+}
+
+const Anecdote = ({text, points}) => {
+  return (
+    <div>
+      {text}
+      <DisplayVotes votes={points}/>
+    </div>
+  )
 }
 
 const App = () => {
@@ -36,12 +55,16 @@ const App = () => {
   
   const [selected, setSelected] = useState(0)
   const [points, setPoints] = useState(new Uint8Array(anecdotes.length))
+  const maxIndex = points.indexOf(Math.max(...points))
 
   return (
     <div>
-      {anecdotes[selected]}
+      <Header text="Anecdote of the day" />
+      <Anecdote text={anecdotes[selected]} points={points[selected]} />
       <Button handleClick={() => randomSelect(setSelected, anecdotes)} text="next anecdote"/> 
       <Button handleClick={() => updatePoints(points, selected, setPoints)} text="vote"/>
+      <Header text="Anecdote with most votes" />
+      <Anecdote text={anecdotes[maxIndex]} points={points[maxIndex]} />
     </div>
   )
 }
