@@ -32,8 +32,17 @@ const App = () => {
 
   const AddPerson = (event) => {
     event.preventDefault()
+
+    const nameIsValid = newName.length > 0;
+    const numberIsValid = newNumber.length > 0;
     const exists = persons.some(person => person.name === newName)
-    if (!exists && newName.length > 0 && newNumber.length > 0)
+
+    if (!nameIsValid || !numberIsValid) {
+      alert("Error: invalid name or number")
+      return;
+    }
+
+    if (!exists)
     {
       const personObject = {
         name: newName,
@@ -45,8 +54,20 @@ const App = () => {
           setPersons(persons.concat(returnedPerson))
         })
     }
-    else if (exists) alert(`${newName} is already added to phonebook`)
-    else alert(`Error: invalid name or number`)
+    else
+    {
+      if (window.confirm(`${newName} is already added to phonebook, replace old number?`))
+      {
+        const toUpdate = persons.find(person => person.name === newName)
+        const personObject = { ...toUpdate, number:newNumber }
+      
+        personService
+          .update(toUpdate.id, personObject)
+          .then(returnedPerson => {
+            setPersons(persons.map(person => person.id !== toUpdate.id ? person : returnedPerson))
+          })
+      }
+    }
     setNewName('')
     setNewNumber('')
   }
