@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import Weather from './Weather'
 
-const DisplayCountry = ({country}) => {
+const DisplayCountry = ( {country} ) => {
     const [countryData, setCountryData] = useState(null)
 
     useEffect(() => {
@@ -28,6 +29,7 @@ const DisplayCountry = ({country}) => {
                         {keys.map(key => <li key={key}>{countryData.languages[key]}</li>)}
                     </ul>
                 <img src={countryData.flags.png} alt="country flag"></img>
+                <Weather countryData={countryData} />
             </div>
         </div>
     )
